@@ -3,6 +3,7 @@ import { ArrowLeft, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ProductCard from '../components/ProductCard';
+import { getProductos, getCategorias } from '../services/api';
 
 function Catalogo() {
   const [productos, setProductos] = useState([]);
@@ -13,13 +14,11 @@ function Catalogo() {
   const [precioMax, setPrecioMax] = useState('');
   const [orden, setOrden] = useState('');
   useEffect(() => {
-    fetch('http://localhost:3001/api/productos')
-      .then(res => res.json())
+    getProductos()
       .then(data => setProductos(data))
       .catch(err => console.error('Error al cargar productos:', err));
 
-    fetch('http://localhost:3001/api/categorias')
-      .then(res => res.json())
+    getCategorias()
       .then(data => setCategorias(data))
       .catch(err => console.error('Error al cargar categorías:', err));
   }, []);

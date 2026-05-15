@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { getProductoPorId, getImagenUrl } from '../services/api';
 import {
   ArrowLeft,
   ShoppingCart,
@@ -19,14 +20,7 @@ function DetalleProducto() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch(`http://localhost:3001/api/productos/${id}`)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('No se pudo cargar el producto');
-        }
-
-        return res.json();
-      })
+    getProductoPorId(id)
       .then(data => {
         setProducto(data);
 
@@ -42,6 +36,8 @@ function DetalleProducto() {
         setCargando(false);
       });
   }, [id]);
+
+
 
   const formatoPrecio = precio => {
     return Number(precio).toLocaleString('es-GT', {
@@ -120,7 +116,7 @@ function DetalleProducto() {
             <div className="rounded-[2rem] border border-white/10 bg-gray-950 p-5 shadow-2xl">
               <div className="relative aspect-[4/3] overflow-hidden rounded-[1.5rem] bg-black">
                 <img
-                  src={`http://localhost:3001/imagenes/${imagenActual}`}
+                  src={getImagenUrl(imagenActual)}
                   alt={producto.nombre}
                   className="h-full w-full object-cover transition duration-500"
                 />
