@@ -44,7 +44,6 @@ body {
 #inicio img {
   display: block;
 }
-
 @keyframes slideIn {
   from {
     opacity: 0;

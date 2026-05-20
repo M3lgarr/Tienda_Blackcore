@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import Navbar from '../components/Navbar';
+import AdminLayout from '../layouts/AdminLayout';
 import {
   getProductos,
   getCategorias,
@@ -24,6 +24,14 @@ function AdminProductos() {
   const [formulario, setFormulario] = useState(productoInicial);
   const [productoEditando, setProductoEditando] = useState(null);
   const [notificacion, setNotificacion] = useState(null);
+
+  const mostrarNotificacion = (tipo, texto) => {
+    setNotificacion({ tipo, texto });
+
+    setTimeout(() => {
+      setNotificacion(null);
+    }, 3000);
+  };
 
   const cargarDatos = () => {
     getProductos()
@@ -57,14 +65,6 @@ function AdminProductos() {
   const limpiarFormulario = () => {
     setFormulario(productoInicial);
     setProductoEditando(null);
-  };
-
-  const mostrarNotificacion = (tipo, texto) => {
-    setNotificacion({ tipo, texto });
-
-    setTimeout(() => {
-      setNotificacion(null);
-    }, 3000);
   };
 
   const guardarProducto = async e => {
@@ -170,9 +170,10 @@ function AdminProductos() {
     : null;
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <Navbar />
-
+    <AdminLayout
+      titulo="Gestión de productos"
+      subtitulo="Crear, editar y eliminar productos del catálogo BlackCore."
+    >
       {notificacion && (
         <div
           className={`fixed right-6 top-24 z-[100] w-[340px] animate-[slideIn_.25s_ease-out] rounded-2xl border border-white/10 bg-gray-950 p-5 ${estiloToast.borde}`}
@@ -208,212 +209,208 @@ function AdminProductos() {
         </div>
       )}
 
-      <main className="px-6 pb-20 pt-32">
-        <div className="mx-auto max-w-7xl">
-          <div className="mb-10">
-            <p className="text-sm font-bold uppercase tracking-[0.4em] text-green-400">
-              Panel interno
-            </p>
+      <div className="mb-10">
+        <p className="text-sm font-bold uppercase tracking-[0.4em] text-green-400">
+          Panel interno
+        </p>
 
-            <h1 className="mt-4 text-4xl font-black md:text-5xl">
-              Gestión de productos
-            </h1>
+        <h2 className="mt-4 text-4xl font-black md:text-5xl">
+          Gestión de productos
+        </h2>
 
-            <p className="mt-4 max-w-3xl text-gray-400">
-              Módulo para crear, editar y eliminar productos del catálogo BlackCore.
-              Esta sección permite administrar la información visible en la tienda.
-            </p>
+        <p className="mt-4 max-w-3xl text-gray-400">
+          Módulo para crear, editar y eliminar productos del catálogo BlackCore.
+          Esta sección permite administrar la información visible en la tienda.
+        </p>
+      </div>
+
+      <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+        <form
+          onSubmit={guardarProducto}
+          className="rounded-[2rem] border border-white/10 bg-gray-950 p-6 shadow-2xl"
+        >
+          <h3 className="text-2xl font-black">
+            {productoEditando ? 'Editar producto' : 'Agregar producto'}
+          </h3>
+
+          <p className="mt-2 text-sm text-gray-500">
+            Completa la información del producto que será visible en el catálogo.
+          </p>
+
+          <div className="mt-6 space-y-4">
+            <input
+              name="nombre"
+              value={formulario.nombre}
+              onChange={manejarCambio}
+              placeholder="Nombre del producto"
+              required
+              className="w-full rounded-2xl border border-white/10 bg-black px-5 py-4 text-white outline-none transition focus:border-green-400"
+            />
+
+            <textarea
+              name="descripcion"
+              value={formulario.descripcion}
+              onChange={manejarCambio}
+              placeholder="Descripción"
+              rows="4"
+              required
+              className="w-full rounded-2xl border border-white/10 bg-black px-5 py-4 text-white outline-none transition focus:border-green-400"
+            />
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <input
+                name="precio"
+                value={formulario.precio}
+                onChange={manejarCambio}
+                type="number"
+                step="0.01"
+                placeholder="Precio"
+                required
+                className="w-full rounded-2xl border border-white/10 bg-black px-5 py-4 text-white outline-none transition focus:border-green-400"
+              />
+
+              <input
+                name="stock"
+                value={formulario.stock}
+                onChange={manejarCambio}
+                type="number"
+                placeholder="Stock"
+                required
+                className="w-full rounded-2xl border border-white/10 bg-black px-5 py-4 text-white outline-none transition focus:border-green-400"
+              />
+            </div>
+
+            <input
+              name="imagen"
+              value={formulario.imagen}
+              onChange={manejarCambio}
+              placeholder="Ruta imagen: mouse/producto.jpg"
+              required
+              className="w-full rounded-2xl border border-white/10 bg-black px-5 py-4 text-white outline-none transition focus:border-green-400"
+            />
+
+            <select
+              name="categoriaId"
+              value={formulario.categoriaId}
+              onChange={manejarCambio}
+              required
+              className="w-full rounded-2xl border border-white/10 bg-black px-5 py-4 text-white outline-none transition focus:border-green-400"
+            >
+              <option value="">Selecciona categoría</option>
+
+              {categorias.map(categoria => (
+                <option key={categoria.id} value={categoria.id}>
+                  {categoria.nombre}
+                </option>
+              ))}
+            </select>
           </div>
 
-          <section className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
-            <form
-              onSubmit={guardarProducto}
-              className="rounded-[2rem] border border-white/10 bg-gray-950 p-6 shadow-2xl"
+          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+            <button
+              type="submit"
+              className="flex-1 rounded-2xl bg-green-400 px-5 py-4 font-black text-black transition hover:bg-green-300"
             >
-              <h2 className="text-2xl font-black">
-                {productoEditando ? 'Editar producto' : 'Agregar producto'}
-              </h2>
+              {productoEditando ? 'Actualizar producto' : 'Crear producto'}
+            </button>
 
-              <p className="mt-2 text-sm text-gray-500">
-                Completa la información del producto que será visible en el catálogo.
+            {productoEditando && (
+              <button
+                type="button"
+                onClick={limpiarFormulario}
+                className="rounded-2xl border border-white/10 px-5 py-4 font-black text-gray-300 transition hover:border-green-400 hover:text-green-400"
+              >
+                Cancelar
+              </button>
+            )}
+          </div>
+        </form>
+
+        <section className="rounded-[2rem] border border-white/10 bg-gray-950 p-6 shadow-2xl">
+          <div className="flex flex-col justify-between gap-3 border-b border-white/10 pb-5 md:flex-row md:items-center">
+            <div>
+              <h3 className="text-2xl font-black">
+                Productos registrados
+              </h3>
+
+              <p className="mt-1 text-sm text-gray-500">
+                Total de productos: {productos.length}
               </p>
+            </div>
 
-              <div className="mt-6 space-y-4">
-                <input
-                  name="nombre"
-                  value={formulario.nombre}
-                  onChange={manejarCambio}
-                  placeholder="Nombre del producto"
-                  required
-                  className="w-full rounded-2xl border border-white/10 bg-black px-5 py-4 text-white outline-none transition focus:border-green-400"
-                />
+            <button
+              onClick={cargarDatos}
+              className="rounded-full border border-white/10 px-5 py-2 text-sm font-bold text-gray-300 transition hover:border-green-400 hover:text-green-400"
+            >
+              Actualizar lista
+            </button>
+          </div>
 
-                <textarea
-                  name="descripcion"
-                  value={formulario.descripcion}
-                  onChange={manejarCambio}
-                  placeholder="Descripción"
-                  rows="4"
-                  required
-                  className="w-full rounded-2xl border border-white/10 bg-black px-5 py-4 text-white outline-none transition focus:border-green-400"
-                />
-
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <input
-                    name="precio"
-                    value={formulario.precio}
-                    onChange={manejarCambio}
-                    type="number"
-                    step="0.01"
-                    placeholder="Precio"
-                    required
-                    className="w-full rounded-2xl border border-white/10 bg-black px-5 py-4 text-white outline-none transition focus:border-green-400"
-                  />
-
-                  <input
-                    name="stock"
-                    value={formulario.stock}
-                    onChange={manejarCambio}
-                    type="number"
-                    placeholder="Stock"
-                    required
-                    className="w-full rounded-2xl border border-white/10 bg-black px-5 py-4 text-white outline-none transition focus:border-green-400"
-                  />
-                </div>
-
-                <input
-                  name="imagen"
-                  value={formulario.imagen}
-                  onChange={manejarCambio}
-                  placeholder="Ruta imagen: mouse/producto.jpg"
-                  required
-                  className="w-full rounded-2xl border border-white/10 bg-black px-5 py-4 text-white outline-none transition focus:border-green-400"
-                />
-
-                <select
-                  name="categoriaId"
-                  value={formulario.categoriaId}
-                  onChange={manejarCambio}
-                  required
-                  className="w-full rounded-2xl border border-white/10 bg-black px-5 py-4 text-white outline-none transition focus:border-green-400"
+          <div className="mt-6 max-h-[720px] space-y-4 overflow-y-auto pr-2">
+            {productos.length === 0 ? (
+              <p className="text-gray-500">
+                No hay productos registrados.
+              </p>
+            ) : (
+              productos.map(producto => (
+                <article
+                  key={producto.id}
+                  className="rounded-2xl border border-white/10 bg-black p-4 transition hover:border-green-400/40"
                 >
-                  <option value="">Selecciona categoría</option>
+                  <div className="flex flex-col gap-4 md:flex-row md:items-center">
+                    <img
+                      src={getImagenUrl(producto.imagen)}
+                      alt={producto.nombre}
+                      className="h-24 w-24 rounded-xl object-cover"
+                    />
 
-                  {categorias.map(categoria => (
-                    <option key={categoria.id} value={categoria.id}>
-                      {categoria.nombre}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                    <div className="flex-1">
+                      <p className="font-black text-white">
+                        {producto.nombre}
+                      </p>
 
-              <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <button
-                  type="submit"
-                  className="flex-1 rounded-2xl bg-green-400 px-5 py-4 font-black text-black transition hover:bg-green-300"
-                >
-                  {productoEditando ? 'Actualizar producto' : 'Crear producto'}
-                </button>
+                      <p className="mt-1 line-clamp-2 text-sm text-gray-500">
+                        {producto.descripcion}
+                      </p>
 
-                {productoEditando && (
-                  <button
-                    type="button"
-                    onClick={limpiarFormulario}
-                    className="rounded-2xl border border-white/10 px-5 py-4 font-black text-gray-300 transition hover:border-green-400 hover:text-green-400"
-                  >
-                    Cancelar
-                  </button>
-                )}
-              </div>
-            </form>
+                      <div className="mt-2 flex flex-wrap gap-2 text-xs">
+                        <span className="rounded-full bg-green-400/10 px-3 py-1 font-bold text-green-300">
+                          Q{producto.precio}
+                        </span>
 
-            <section className="rounded-[2rem] border border-white/10 bg-gray-950 p-6 shadow-2xl">
-              <div className="flex flex-col justify-between gap-3 border-b border-white/10 pb-5 md:flex-row md:items-center">
-                <div>
-                  <h2 className="text-2xl font-black">
-                    Productos registrados
-                  </h2>
+                        <span className="rounded-full bg-white/10 px-3 py-1 font-bold text-gray-300">
+                          Stock: {producto.stock}
+                        </span>
 
-                  <p className="mt-1 text-sm text-gray-500">
-                    Total de productos: {productos.length}
-                  </p>
-                </div>
-
-                <button
-                  onClick={cargarDatos}
-                  className="rounded-full border border-white/10 px-5 py-2 text-sm font-bold text-gray-300 transition hover:border-green-400 hover:text-green-400"
-                >
-                  Actualizar lista
-                </button>
-              </div>
-
-              <div className="mt-6 max-h-[720px] space-y-4 overflow-y-auto pr-2">
-                {productos.length === 0 ? (
-                  <p className="text-gray-500">
-                    No hay productos registrados.
-                  </p>
-                ) : (
-                  productos.map(producto => (
-                    <article
-                      key={producto.id}
-                      className="rounded-2xl border border-white/10 bg-black p-4 transition hover:border-green-400/40"
-                    >
-                      <div className="flex flex-col gap-4 md:flex-row md:items-center">
-                        <img
-                          src={getImagenUrl(producto.imagen)}
-                          alt={producto.nombre}
-                          className="h-24 w-24 rounded-xl object-cover"
-                        />
-
-                        <div className="flex-1">
-                          <p className="font-black text-white">
-                            {producto.nombre}
-                          </p>
-
-                          <p className="mt-1 line-clamp-2 text-sm text-gray-500">
-                            {producto.descripcion}
-                          </p>
-
-                          <div className="mt-2 flex flex-wrap gap-2 text-xs">
-                            <span className="rounded-full bg-green-400/10 px-3 py-1 font-bold text-green-300">
-                              Q{producto.precio}
-                            </span>
-
-                            <span className="rounded-full bg-white/10 px-3 py-1 font-bold text-gray-300">
-                              Stock: {producto.stock}
-                            </span>
-
-                            <span className="rounded-full bg-white/10 px-3 py-1 font-bold text-gray-300">
-                              {producto.categoria?.nombre || 'Sin categoría'}
-                            </span>
-                          </div>
-                        </div>
-
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => editarProducto(producto)}
-                            className="rounded-xl border border-white/10 px-4 py-2 text-sm font-bold text-gray-300 transition hover:border-green-400 hover:text-green-400"
-                          >
-                            Editar
-                          </button>
-
-                          <button
-                            onClick={() => borrarProducto(producto.id)}
-                            className="rounded-xl border border-red-400/30 px-4 py-2 text-sm font-bold text-red-300 transition hover:bg-red-400 hover:text-black"
-                          >
-                            Eliminar
-                          </button>
-                        </div>
+                        <span className="rounded-full bg-white/10 px-3 py-1 font-bold text-gray-300">
+                          {producto.categoria?.nombre || 'Sin categoría'}
+                        </span>
                       </div>
-                    </article>
-                  ))
-                )}
-              </div>
-            </section>
-          </section>
-        </div>
-      </main>
-    </div>
+                    </div>
+
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => editarProducto(producto)}
+                        className="rounded-xl border border-white/10 px-4 py-2 text-sm font-bold text-gray-300 transition hover:border-green-400 hover:text-green-400"
+                      >
+                        Editar
+                      </button>
+
+                      <button
+                        onClick={() => borrarProducto(producto.id)}
+                        className="rounded-xl border border-red-400/30 px-4 py-2 text-sm font-bold text-red-300 transition hover:bg-red-400 hover:text-black"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              ))
+            )}
+          </div>
+        </section>
+      </section>
+    </AdminLayout>
   );
 }
 
