@@ -40,7 +40,7 @@ function AdminSidebar() {
   ];
 
   return (
-    <aside className="hidden min-h-screen w-72 border-r border-white/10 bg-black/95 px-5 py-6 lg:block">
+   <aside className="fixed left-0 top-0 z-50 hidden h-screen w-72 overflow-y-auto border-r border-white/10 bg-black/95 px-5 py-6 lg:block">
       <div className="mb-10">
         <h2 className="text-2xl font-black tracking-widest text-green-400">
           BLACK<span className="text-white">CORE</span>

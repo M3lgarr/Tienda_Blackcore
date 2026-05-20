@@ -78,13 +78,14 @@ function Navbar() {
               Gestión
             </Link>
 
-            <button
-              className="flex items-center gap-2 rounded-full border border-green-400/40 px-4 py-2 text-sm font-bold text-green-400 transition hover:bg-green-400 hover:text-black"
-              title="Cuenta de usuario"
-            >
-              <UserRound size={18} />
-              Cuenta
-            </button>
+          <Link
+            to="/login"
+            className="flex items-center gap-2 rounded-full border border-green-400/40 px-4 py-2 text-sm font-bold text-green-400 transition hover:bg-green-400 hover:text-black"
+            title="Cuenta de usuario"
+          >
+            <UserRound size={18} />
+            Cuenta
+          </Link>
           </div>
 
           {/* BOTÓN MENÚ MÓVIL */}
@@ -142,12 +143,14 @@ function Navbar() {
               Gestión de productos
             </Link>
 
-            <button
-              className="mt-2 flex items-center justify-center gap-2 rounded-2xl bg-green-400 px-5 py-4 font-black text-black transition hover:bg-green-300"
-            >
-              <UserRound size={18} />
-              Cuenta
-            </button>
+          <Link
+            to="/login"
+            className="flex items-center gap-2 rounded-full border border-green-400/40 px-4 py-2 text-sm font-bold text-green-400 transition hover:bg-green-400 hover:text-black"
+            title="Cuenta de usuario"
+          >
+            <UserRound size={18} />
+            Cuenta
+          </Link>
           </div>
         </div>
       )}
