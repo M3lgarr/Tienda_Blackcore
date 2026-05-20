@@ -38,6 +38,7 @@ function Navbar() {
             Catálogo
           </Link>
 
+
           <a href="/#empresa" className="transition hover:text-green-400">
             Corporación
           </a>
@@ -66,14 +67,25 @@ function Navbar() {
               0
             </span>
           </button>
+          
 
-          <button
-            className="hidden items-center gap-2 rounded-full border border-green-400/40 px-4 py-2 text-sm font-bold text-green-400 transition hover:bg-green-400 hover:text-black md:flex"
-            title="Cuenta de usuario"
-          >
-            <UserRound size={18} />
-            Cuenta
-          </button>
+          <div className="hidden items-center gap-2 md:flex">
+            <Link
+              to="/admin/productos"
+              className="rounded-full border border-white/10 px-4 py-2 text-sm font-bold text-gray-300 transition hover:border-green-400 hover:text-green-400"
+              title="Gestión de productos"
+            >
+              Gestión
+            </Link>
+
+            <button
+              className="flex items-center gap-2 rounded-full border border-green-400/40 px-4 py-2 text-sm font-bold text-green-400 transition hover:bg-green-400 hover:text-black"
+              title="Cuenta de usuario"
+            >
+              <UserRound size={18} />
+              Cuenta
+            </button>
+          </div>
 
           {/* BOTÓN MENÚ MÓVIL */}
           <button
@@ -121,6 +133,14 @@ function Navbar() {
             >
               Noticias
             </a>
+
+            <Link
+              to="/admin/productos"
+              onClick={cerrarMenu}
+              className="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 font-bold text-gray-300 transition hover:border-green-400 hover:text-green-400"
+            >
+              Gestión de productos
+            </Link>
 
             <button
               className="mt-2 flex items-center justify-center gap-2 rounded-2xl bg-green-400 px-5 py-4 font-black text-black transition hover:bg-green-300"
