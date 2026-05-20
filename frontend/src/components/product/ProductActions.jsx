@@ -1,9 +1,29 @@
 import { ShoppingCart } from 'lucide-react';
+import { useCart } from '../../context/CartContext';
 
-function ProductActions({ stockActual }) {
+function ProductActions({ producto, varianteSeleccionada, precioActual, stockActual }) {
+  const { agregarAlCarrito } = useCart();
+
+  const manejarAgregarCarrito = () => {
+    const item = {
+      itemId: `${producto.id}-${varianteSeleccionada?.id || 'principal'}`,
+      productoId: producto.id,
+      varianteId: varianteSeleccionada?.id || null,
+      nombre: producto.nombre,
+      variante: varianteSeleccionada?.nombre || null,
+      color: varianteSeleccionada?.color || null,
+      imagen: varianteSeleccionada?.imagen || producto.imagen,
+      precio: Number(precioActual),
+      stock: Number(stockActual)
+    };
+
+    agregarAlCarrito(item);
+  };
+
   return (
     <div className="mt-10 grid gap-4 sm:grid-cols-2">
       <button
+        onClick={manejarAgregarCarrito}
         disabled={stockActual <= 0}
         className={`inline-flex items-center justify-center gap-2 rounded-2xl px-6 py-4 font-black transition ${
           stockActual > 0

@@ -4,6 +4,9 @@ import Catalogo from './pages/Catalogo';
 import './index.css';
 import DetalleProducto from './pages/DetalleProducto';
 import AdminProductos from './pages/AdminProductos';
+import Carrito from './pages/Carrito';
+import Checkout from './pages/Checkout';
+import ConfirmacionCompra from './pages/ConfirmacionCompra';
 
 function App() {
   return (
@@ -11,8 +14,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/catalogo" element={<Catalogo />} />
-       <Route path="/producto/:id" element={<DetalleProducto />} />
-       <Route path="/admin/productos" element={<AdminProductos />} />
+        <Route path="/producto/:id" element={<DetalleProducto />} />
+        <Route path="/admin/productos" element={<AdminProductos />} />
+        <Route path="/carrito" element={<Carrito />} />
+        <Route path="/checkout" element={<Checkout />} />
+       <Route path="/confirmacion" element={<ConfirmacionCompra />} />
       </Routes>
     </BrowserRouter>
   );

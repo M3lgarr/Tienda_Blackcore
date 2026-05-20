@@ -129,7 +129,12 @@ function DetalleProducto() {
                 setVarianteSeleccionada={setVarianteSeleccionada}
               />
 
-              <ProductActions stockActual={stockActual} />
+              <ProductActions
+                producto={producto}
+                varianteSeleccionada={varianteSeleccionada}
+                precioActual={precioActual}
+                stockActual={stockActual}
+              />
               <ProductBenefits />
 
               </div>

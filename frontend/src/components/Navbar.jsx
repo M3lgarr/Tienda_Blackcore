@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
 import {
   ShoppingCart,
   UserRound,
@@ -10,6 +11,7 @@ import {
 
 function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const { totalProductos } = useCart();
 
   const cerrarMenu = () => {
     setMenuAbierto(false);
@@ -57,16 +59,17 @@ function Navbar() {
             <Search size={19} />
           </button>
 
-          <button
+          <Link
+            to="/carrito"
             className="relative flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-gray-300 transition hover:border-green-400 hover:text-green-400"
             title="Carrito de compras"
           >
             <ShoppingCart size={20} />
 
             <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-green-400 text-xs font-black text-black">
-              0
+              {totalProductos}
             </span>
-          </button>
+          </Link>
           
 
           <div className="hidden items-center gap-2 md:flex">
