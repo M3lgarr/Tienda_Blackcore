@@ -1,6 +1,6 @@
 function BrandStrip({ marcas }) {
   return (
-    <section className="bg-black px-6 py-24">
+    <section className="keep-dark bg-black px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <div className="mb-16 text-center">
           <p className="text-sm font-bold uppercase tracking-[0.5em] text-green-400">

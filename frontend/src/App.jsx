@@ -7,6 +7,7 @@ import AdminProductos from './pages/AdminProductos';
 import Carrito from './pages/Carrito';
 import Checkout from './pages/Checkout';
 import ConfirmacionCompra from './pages/ConfirmacionCompra';
+import Cuenta from './pages/Cuenta';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/carrito" element={<Carrito />} />
         <Route path="/checkout" element={<Checkout />} />
        <Route path="/confirmacion" element={<ConfirmacionCompra />} />
+       <Route path="/cuenta" element={<Cuenta />} />
       </Routes>
     </BrowserRouter>
   );

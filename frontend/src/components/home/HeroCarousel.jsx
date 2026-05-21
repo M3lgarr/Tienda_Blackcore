@@ -27,7 +27,7 @@ function HeroCarousel({ slides }) {
   };
 
   return (
-    <section id="inicio" className="relative min-h-screen w-full overflow-hidden bg-black">
+   <section id="inicio" className="keep-dark relative min-h-screen w-full overflow-hidden bg-black">
       {slides.map((slide, index) => (
         <div
           key={index}

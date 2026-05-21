@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+/* ================================
+   BASE GENERAL
+================================ */
+
 html {
   scroll-behavior: smooth;
 }
@@ -7,11 +11,23 @@ html {
 body {
   margin: 0;
   background: #000;
+  color: #fff;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease;
 }
 
 * {
   box-sizing: border-box;
 }
+
+#root {
+  min-height: 100vh;
+}
+
+/* ================================
+   LINE CLAMP
+================================ */
 
 .line-clamp-1 {
   display: -webkit-box;
@@ -37,6 +53,10 @@ body {
   overflow: hidden;
 }
 
+/* ================================
+   HERO
+================================ */
+
 #inicio {
   position: relative;
 }
@@ -44,6 +64,11 @@ body {
 #inicio img {
   display: block;
 }
+
+/* ================================
+   ANIMACIONES
+================================ */
+
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -54,4 +79,297 @@ body {
     opacity: 1;
     transform: translateX(0);
   }
+}
+
+/* ================================
+   TEMA BASE
+================================ */
+
+html.dark body {
+  background: #000;
+  color: #fff;
+}
+
+html.light body {
+  background: #f5f7f6;
+  color: #111827;
+}
+
+/* ================================
+   ZONAS PROTEGIDAS
+   Estas se quedan oscuras incluso en modo claro
+================================ */
+
+html.light .keep-dark {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+html.light .keep-dark .bg-black,
+html.light .keep-dark .bg-gray-950,
+html.light .keep-dark .bg-gray-900 {
+  background-color: #000 !important;
+}
+
+html.light .keep-dark .text-white {
+  color: #fff !important;
+}
+
+html.light .keep-dark .text-gray-300 {
+  color: #d1d5db !important;
+}
+
+html.light .keep-dark .text-gray-400 {
+  color: #9ca3af !important;
+}
+
+html.light .keep-dark .text-gray-500 {
+  color: #6b7280 !important;
+}
+
+html.light .keep-dark .border-white\/10 {
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* ================================
+   MODO CLARO INTELIGENTE
+   Solo afecta zonas normales, no .keep-dark
+================================ */
+
+html.light .bg-black:not(.keep-dark):not(.keep-dark *) {
+  background-color: #f5f7f6 !important;
+}
+
+html.light .bg-gray-950:not(.keep-dark):not(.keep-dark *) {
+  background-color: #ffffff !important;
+}
+
+html.light .bg-gray-900:not(.keep-dark):not(.keep-dark *) {
+  background-color: #f8fafc !important;
+}
+
+html.light .bg-white\/5:not(.keep-dark):not(.keep-dark *) {
+  background-color: rgba(17, 24, 39, 0.04) !important;
+}
+
+html.light .bg-white\/10:not(.keep-dark):not(.keep-dark *) {
+  background-color: rgba(17, 24, 39, 0.07) !important;
+}
+
+html.light .bg-black\/55:not(.keep-dark):not(.keep-dark *),
+html.light .bg-black\/60:not(.keep-dark):not(.keep-dark *),
+html.light .bg-black\/70:not(.keep-dark):not(.keep-dark *),
+html.light .bg-black\/80:not(.keep-dark):not(.keep-dark *),
+html.light .bg-black\/85:not(.keep-dark):not(.keep-dark *),
+html.light .bg-black\/95:not(.keep-dark):not(.keep-dark *) {
+  background-color: rgba(255, 255, 255, 0.92) !important;
+}
+
+/* ================================
+   TEXTOS EN MODO CLARO
+================================ */
+
+html.light .text-white:not(.keep-dark):not(.keep-dark *) {
+  color: #111827 !important;
+}
+
+html.light .text-gray-100:not(.keep-dark):not(.keep-dark *),
+html.light .text-gray-200:not(.keep-dark):not(.keep-dark *),
+html.light .text-gray-300:not(.keep-dark):not(.keep-dark *) {
+  color: #374151 !important;
+}
+
+html.light .text-gray-400:not(.keep-dark):not(.keep-dark *) {
+  color: #4b5563 !important;
+}
+
+html.light .text-gray-500:not(.keep-dark):not(.keep-dark *) {
+  color: #6b7280 !important;
+}
+
+html.light .text-green-400,
+html.light .text-green-300 {
+  color: #059669 !important;
+}
+
+/* ================================
+   VERDE BLACKCORE
+================================ */
+
+html.light .bg-green-400 {
+  background-color: #16d46b !important;
+}
+
+html.light .bg-green-400.text-black {
+  color: #020617 !important;
+}
+
+/* ================================
+   BORDES Y HOVERS
+================================ */
+
+html.light .border-white\/10:not(.keep-dark):not(.keep-dark *) {
+  border-color: rgba(17, 24, 39, 0.12) !important;
+}
+
+html.light .border-white\/20:not(.keep-dark):not(.keep-dark *) {
+  border-color: rgba(17, 24, 39, 0.2) !important;
+}
+
+html.light .border-green-400\/30,
+html.light .border-green-400\/40,
+html.light .border-green-400\/50 {
+  border-color: rgba(5, 150, 105, 0.45) !important;
+}
+
+html.light .hover\:border-green-400:hover,
+html.light .hover\:border-green-400\/30:hover,
+html.light .hover\:border-green-400\/40:hover,
+html.light .hover\:border-green-400\/50:hover,
+html.light .hover\:border-green-400\/60:hover,
+html.light .hover\:border-green-400\/70:hover {
+  border-color: rgba(22, 212, 107, 0.75) !important;
+}
+
+html.light .hover\:text-green-400:hover {
+  color: #059669 !important;
+}
+
+html.light .hover\:text-green-300:hover {
+  color: #047857 !important;
+}
+
+html.light .hover\:bg-green-400:hover {
+  background-color: #16d46b !important;
+  color: #020617 !important;
+}
+
+html.light .hover\:bg-green-300:hover {
+  background-color: #86efac !important;
+  color: #020617 !important;
+}
+
+/* Hover de tarjetas */
+html.light article:hover {
+  border-color: rgba(22, 212, 107, 0.7) !important;
+  box-shadow: 0 18px 45px rgba(5, 150, 105, 0.16) !important;
+}
+
+/* ================================
+   FORMULARIOS
+================================ */
+
+html.light input,
+html.light textarea,
+html.light select {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  border-color: rgba(17, 24, 39, 0.14) !important;
+}
+
+html.light input::placeholder,
+html.light textarea::placeholder {
+  color: #6b7280 !important;
+}
+
+html.light input:focus,
+html.light textarea:focus,
+html.light select:focus {
+  border-color: #16d46b !important;
+  outline: none !important;
+}
+
+/* ================================
+   NAVBAR
+================================ */
+
+html.light nav {
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  border-color: rgba(17, 24, 39, 0.12) !important;
+}
+
+/* ================================
+   ADMIN
+================================ */
+
+html.light header {
+  background-color: rgba(255, 255, 255, 0.94) !important;
+  border-color: rgba(17, 24, 39, 0.12) !important;
+}
+
+html.light aside:not(.keep-dark) {
+  background-color: #ffffff !important;
+  border-color: rgba(17, 24, 39, 0.12) !important;
+}
+
+/* ================================
+   LOGOS DE MARCAS
+================================ */
+
+.brand-logo {
+  transition:
+    opacity 0.25s ease,
+    filter 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* En modo claro se ven oscuros, no lavados */
+html.light .brand-logo {
+  opacity: 0.72 !important;
+  filter: grayscale(1) brightness(0.35) contrast(1.35) !important;
+}
+
+html.light .brand-logo:hover {
+  opacity: 1 !important;
+  filter: grayscale(0) brightness(0.45) contrast(1.25) !important;
+  transform: scale(1.05);
+}
+
+/* En zona keep-dark, logos se mantienen claros */
+html.light .keep-dark .brand-logo {
+  opacity: 0.8 !important;
+  filter: grayscale(1) brightness(1.8) contrast(1.2) !important;
+}
+
+html.light .keep-dark .brand-logo:hover {
+  opacity: 1 !important;
+  filter: grayscale(0) brightness(1.6) contrast(1.2) !important;
+}
+
+/* ================================
+   SOMBRAS
+================================ */
+
+html.light .shadow-2xl,
+html.light .shadow-xl {
+  box-shadow: 0 20px 45px rgba(17, 24, 39, 0.08) !important;
+}
+
+/* ================================
+   SCROLLBAR
+================================ */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #22c55e;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #16a34a;
+}
+
+html.light ::-webkit-scrollbar-track {
+  background: #e5e7eb;
+}
+
+html.light ::-webkit-scrollbar-thumb {
+  background: #16d46b;
 }

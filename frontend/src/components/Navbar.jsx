@@ -1,17 +1,20 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useTheme } from '../context/ThemeContext';
 import {
   ShoppingCart,
   UserRound,
   Search,
   Menu,
-  X
+  X,
+  Sun,
+  Moon
 } from 'lucide-react';
-
 function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState(false);
   const { totalProductos } = useCart();
+  const { tema, cambiarTema } = useTheme();
 
   const cerrarMenu = () => {
     setMenuAbierto(false);
@@ -59,6 +62,14 @@ function Navbar() {
             <Search size={19} />
           </button>
 
+          <button
+            onClick={cambiarTema}
+            className="hidden h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-gray-300 transition hover:border-green-400 hover:text-green-400 md:flex"
+            title={tema === 'dark' ? 'Activar modo claro' : 'Activar modo oscuro'}
+          >
+            {tema === 'dark' ? <Sun size={19} /> : <Moon size={19} />}
+        </button>
+
           <Link
             to="/carrito"
             className="relative flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-gray-300 transition hover:border-green-400 hover:text-green-400"
@@ -82,7 +93,7 @@ function Navbar() {
             </Link>
 
           <Link
-            to="/login"
+            to="/cuenta"
             className="flex items-center gap-2 rounded-full border border-green-400/40 px-4 py-2 text-sm font-bold text-green-400 transition hover:bg-green-400 hover:text-black"
             title="Cuenta de usuario"
           >
@@ -138,6 +149,14 @@ function Navbar() {
               Noticias
             </a>
 
+            <button
+              onClick={cambiarTema}
+              className="flex items-center justify-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-5 py-4 font-bold text-gray-300 transition hover:border-green-400 hover:text-green-400"
+            >
+              {tema === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+              {tema === 'dark' ? 'Modo claro' : 'Modo oscuro'}
+            </button>
+
             <Link
               to="/admin/productos"
               onClick={cerrarMenu}
@@ -146,14 +165,15 @@ function Navbar() {
               Gestión de productos
             </Link>
 
-          <Link
-            to="/login"
-            className="flex items-center gap-2 rounded-full border border-green-400/40 px-4 py-2 text-sm font-bold text-green-400 transition hover:bg-green-400 hover:text-black"
-            title="Cuenta de usuario"
-          >
-            <UserRound size={18} />
-            Cuenta
-          </Link>
+            <Link
+              to="/cuenta"
+              onClick={cerrarMenu}
+              className="flex items-center justify-center gap-2 rounded-2xl border border-green-400/40 px-5 py-4 text-sm font-bold text-green-400 transition hover:bg-green-400 hover:text-black"
+              title="Cuenta de usuario"
+            >
+              <UserRound size={18} />
+              Cuenta
+            </Link>
           </div>
         </div>
       )}

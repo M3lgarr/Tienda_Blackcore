@@ -24,7 +24,7 @@ function VideoPlaylist({ item }) {
 
 function VideoShowcase({ videos }) {
   return (
-    <section className="bg-gray-950 px-6 py-24">
+    <section className="keep-dark bg-gray-950 px-6 py-24">
       <div className="mx-auto max-w-7xl">
         <div className="mb-12 flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <div>
