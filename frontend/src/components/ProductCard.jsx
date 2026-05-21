@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { getImagenUrl } from '../services/api';
 function ProductCard({ prod }) {
   const formatoPrecio = precio => {
     return Number(precio).toLocaleString('es-GT', {
@@ -12,7 +13,7 @@ function ProductCard({ prod }) {
     <article className="group overflow-hidden rounded-3xl border border-white/10 bg-gray-950 shadow-xl transition duration-300 hover:-translate-y-2 hover:border-green-400/70 hover:shadow-[0_0_35px_rgba(0,255,136,0.18)]">
       <div className="relative h-56 overflow-hidden bg-gray-900">
         <img
-          src={`http://localhost:3001/imagenes/${prod.imagen}`}
+          src={getImagenUrl(prod.imagen)}
           alt={prod.nombre}
           className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
         />

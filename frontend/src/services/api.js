@@ -1,24 +1,56 @@
-const API_URL = 'http://localhost:3001';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 async function request(endpoint, options = {}) {
-  const response = await fetch(`${API_URL}${endpoint}`, {
-    headers: {
-      'Content-Type': 'application/json',
-      ...(options.headers || {})
-    },
-    ...options
-  });
+  try {
+    const response = await fetch(`${API_URL}${endpoint}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers
+      },
+      ...options
+    });
 
-  const data = await response.json();
+    const contentType = response.headers.get('content-type');
 
-  if (!response.ok) {
-    throw new Error(data.error || data.detalle || 'Error en la solicitud');
+    const data = contentType?.includes('application/json')
+      ? await response.json()
+      : await response.text();
+
+    if (!response.ok) {
+      throw new Error(
+        typeof data === 'string'
+          ? data
+          : data.detalle || data.error || data.mensaje || 'Error en la petición'
+      );
+    }
+
+    return data;
+  } catch (error) {
+    console.error(`Error en request ${endpoint}:`, error);
+    throw error;
   }
-
-  return data;
 }
 
-// PRODUCTOS
+/* ================================
+   IMÁGENES
+================================ */
+
+export function getImagenUrl(rutaImagen) {
+  if (!rutaImagen) {
+    return '';
+  }
+
+  if (rutaImagen.startsWith('http')) {
+    return rutaImagen;
+  }
+
+  return `${API_URL}/imagenes/${rutaImagen}`;
+}
+
+/* ================================
+   PRODUCTOS
+================================ */
+
 export function getProductos() {
   return request('/api/productos');
 }
@@ -47,18 +79,34 @@ export function eliminarProducto(id) {
   });
 }
 
-// CATEGORÍAS
+/* ================================
+   CATEGORÍAS
+================================ */
+
 export function getCategorias() {
   return request('/api/categorias');
 }
 
-// VARIANTES
+export function crearCategoria(categoria) {
+  return request('/api/categorias', {
+    method: 'POST',
+    body: JSON.stringify(categoria)
+  });
+}
+
+/* ================================
+   VARIANTES
+================================ */
+
 export function getVariantes() {
   return request('/api/productos/variantes');
 }
 
-export function getVariantesPorProducto(id) {
-  return request(`/api/productos/${id}/variantes`);
+export function crearVariante(variante) {
+  return request('/api/productos/variantes', {
+    method: 'POST',
+    body: JSON.stringify(variante)
+  });
 }
 
 export function crearVariantesBulk(variantes) {
@@ -68,29 +116,10 @@ export function crearVariantesBulk(variantes) {
   });
 }
 
-export function actualizarVariante(id, variante) {
-  return request(`/api/productos/variantes/${id}`, {
-    method: 'PUT',
-    body: JSON.stringify(variante)
-  });
-}
+/* ================================
+   NOTICIAS
+================================ */
 
-export function eliminarVariante(id) {
-  return request(`/api/productos/variantes/${id}`, {
-    method: 'DELETE'
-  });
-}
-
-// NOTICIAS
 export function getNoticias() {
   return request('/api/noticias');
-}
-
-// IMÁGENES
-export function getImagenUrl(rutaImagen) {
-  if (!rutaImagen) {
-    return '/fallback/news-placeholder.jpg';
-  }
-
-  return `${API_URL}/imagenes/${rutaImagen}`;
 }
